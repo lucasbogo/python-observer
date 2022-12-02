@@ -15,7 +15,7 @@ Notificar quando é inserido um produto na classe estoque
 Criar classe fornecedor. notificar quando o forncedor enviar um produto, chegou
 O fornecedor recebe outra mensagem (recebemos o produto que voce enviou)
 
-Estoquye está pronto. Preciso adicionar mais observadores. Basicamente, o que muda, é o atualizar
+Estoque está pronto. Preciso adicionar mais observadores. Basicamente, o que muda, é o atualizar
 
 adicionar mais informação, tipo: numero de envio, etc. (não obrigatório). 
 
@@ -98,6 +98,9 @@ class Usuario(Observer):
             
             # Sair da lista de observador
             self.subject.sair(self)
+
+class Forncedor(Observer):
+    pass 
         
 if __name__ == '__main__':
     print('Observer')
