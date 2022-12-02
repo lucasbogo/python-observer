@@ -74,7 +74,7 @@ class Observer(ABC):
     # Método ue recebe a notificação
     def atualizar(self):
         pass
-    # notify Fornecedor
+    # Método que recebe a notificação
     def notificar_fornecedor(self):
         pass
 
@@ -101,8 +101,27 @@ class Usuario(Observer):
             # Sair da lista de observador
             self.subject.sair(self)
 
-class Forncedor(Observer):
-    pass 
+class Fornecedor(Observer):
+     def __init__(self, nome, produto=None, subject=None):
+        #Inicializar atributos
+        self.nome = nome
+        # Produto em falta que o usuário está interessado
+        self.produto = produto
+        # Salvar o estoqur
+        self.subject = subject
+        # COndição verificar se usuario se inscreveu
+        if self.subject:
+            # Chamar o método do estoque
+            self.subject.inscrever(self)
+            
+            
+            def notificar_fornecedor(self):
+                print(f"[Fornecedor] {self.nome} notificado")
+                print(f"\trecebemos o produto {self.produto} ")
+                
+                # Sair da lista de observador
+                self.subject.sair(self) 
+    
         
 if __name__ == '__main__':
     print('Observer')
@@ -114,8 +133,12 @@ if __name__ == '__main__':
     Joana = Usuario("Joana", "teclado z", subject=estoque)
     joao = Usuario("Jhona", "Teclado B", subject=estoque)
     
+    Lucas = Fornecedor("Lucas", "Teclado D", subject=estoque)
+    
     # receber produto
     estoque.receber_produto("Teclado A")
     estoque.receber_produto("Teclado Z")
     estoque.receber_produto("Teclado B")
-    estoque.receber_produto("Teclado A")
+    
+    estoque.notificar_fornecedor("Teclado D")
+    
