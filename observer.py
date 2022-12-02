@@ -74,7 +74,9 @@ class Observer(ABC):
     # Método ue recebe a notificação
     def atualizar(self):
         pass
-
+    # notify Fornecedor
+    def notificar_fornecedor(self):
+        pass
 
 class Usuario(Observer):
     # Construtor
