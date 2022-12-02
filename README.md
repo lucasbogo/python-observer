@@ -1,8 +1,6 @@
 # python-observer
 Observer pattern for didatic project
 
-### Observer pattern for a didatic digital store.
-
 The user that wants (None= not required) to receive a notification everytime the wanted product is in stock, will receive the mentioned notification trough the observer patter.
 <br>
 <br>
