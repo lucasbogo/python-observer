@@ -126,8 +126,7 @@ class Fornecedor(Observer):
 if __name__ == '__main__':
     print('Observer')
     
-class Estoque(Subject):
-    
+    # Criar o estoque   
     estoque = Estoque()
     
     # A joana deve se inscrever no sujeito estoque para poder receber a notificação
