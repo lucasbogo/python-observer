@@ -35,8 +35,6 @@ class Subject(ABC):
     
     def notificar(self):
         pass
-    
-    
   
     
 class Estoque(Subject):
@@ -64,12 +62,10 @@ class Estoque(Subject):
         for observer in self.observadores:
             # avisar todos os inscritos que algo aconteceu
             observer.atualizar()
-            
-    # Método para adicionar produtos    
-    def adicionar_produto(self, produto):
+        
+    def receber_produto(self, produto):
         self.produtos.append(produto)
         self.notificar()
-    
 
 
 class Observer(ABC):
@@ -77,11 +73,8 @@ class Observer(ABC):
     # Método ue recebe a notificação
     def atualizar(self):
         pass
-   
-    def adicionar_produto(self, produto):
-        pass
-    
-    def receber_notificacao(self):
+    # Método que recebe a notificação
+    def notificar_fornecedor(self):
         pass
 
 class Usuario(Observer):
@@ -115,11 +108,22 @@ class Fornecedor(Observer):
         if self.subject:
             self.subject.inscrever(self)
     
-    def adicionar_produto(self, produto):
-        return super().adicionar_produto(produto)
+    def atualizar(self):
+        if self.produto in self.subject.produtos:
+            print(f"[Fornecedor] {self.nome} notificado")
+            print(f"\tProduto {self.produto} está disponível")
+            self.subject.sair(self)
     
-    def receber_notificacao(self):
-        return super().receber_notificacao()
+    def enviar_produto(self):
+        print(f"[Fornecedor] {self.nome} enviando produto")
+        self.subject.receber_produto(self.produto)
+        self.notificar_fornecedor()
+    
+    def notificar_fornecedor(self):
+        print(f"[Fornecedor] {self.nome} notificado")
+        print(f"\tProduto {self.produto} está disponível")
+        self.subject.sair(self)
+    
         
 if __name__ == '__main__':
     print('Observer')
