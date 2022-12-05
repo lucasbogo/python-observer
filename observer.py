@@ -66,6 +66,10 @@ class Estoque(Subject):
     def receber_produto(self, produto):
         self.produtos.append(produto)
         self.notificar()
+        
+    def enviar_produto(self, produto):
+        self.produtos.append(produto)
+        self.notificar()
 
 
 class Observer(ABC):
@@ -73,7 +77,7 @@ class Observer(ABC):
     # Método ue recebe a notificação
     def atualizar(self):
         pass
-    # Método que recebe a notificação
+    # Método fornecedor recebe a notificação
     def notificar_fornecedor(self):
         pass
 
@@ -100,30 +104,24 @@ class Usuario(Observer):
             # Sair da lista de observador
             self.subject.sair(self)
 
+# create class Fornecedor
 class Fornecedor(Observer):
+    # Construtor
     def __init__(self, nome, produto=None, subject=None):
+        #Inicializar atributos
         self.nome = nome
+        # Produto em falta que o usuário está interessado
         self.produto = produto
+        # Salvar o estoqur
         self.subject = subject
+        # Condição verificar se usuario se inscreveu
         if self.subject:
+            # Chamar o método do estoque
             self.subject.inscrever(self)
     
-    def atualizar(self):
-        if self.produto in self.subject.produtos:
-            print(f"[Fornecedor] {self.nome} notificado")
-            print(f"\tProduto {self.produto} está disponível")
-            self.subject.sair(self)
-    
-    def enviar_produto(self):
-        print(f"[Fornecedor] {self.nome} enviando produto")
-        self.subject.receber_produto(self.produto)
-        self.notificar_fornecedor()
-    
     def notificar_fornecedor(self):
-        print(f"[Fornecedor] {self.nome} notificado")
-        print(f"\tProduto {self.produto} está disponível")
-        self.subject.sair(self)
-    
+        return super().notificar_fornecedor()
+       
         
 if __name__ == '__main__':
     print('Observer')
@@ -136,12 +134,14 @@ class Estoque(Subject):
     Joana = Usuario("Joana", "teclado z", subject=estoque)
     joao = Usuario("Jhona", "Teclado B", subject=estoque)
     
-    Lucas = Fornecedor("Lucas", "Teclado D", subject=estoque)
-    
     # receber produto
     estoque.receber_produto("Teclado A")
     estoque.receber_produto("Teclado Z")
     estoque.receber_produto("Teclado B")
     
+    # Fornecedor
+    Lucas = Fornecedor("Lucas", subject=estoque)
+    estoque.enviar_produto("Teclado D")
     estoque.notificar_fornecedor("Teclado D")
+    
     
