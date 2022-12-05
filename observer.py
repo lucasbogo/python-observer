@@ -35,6 +35,8 @@ class Subject(ABC):
     
     def notificar(self):
         pass
+    
+    
   
     
 class Estoque(Subject):
@@ -62,11 +64,12 @@ class Estoque(Subject):
         for observer in self.observadores:
             # avisar todos os inscritos que algo aconteceu
             observer.atualizar()
-        
-    def receber_produto(self, produto):
-        # avisar a todos os inscritos que algo aconteceu
+            
+    # Método para adicionar produtos    
+    def adicionar_produto(self, produto):
         self.produtos.append(produto)
         self.notificar()
+    
 
 
 class Observer(ABC):
@@ -74,8 +77,11 @@ class Observer(ABC):
     # Método ue recebe a notificação
     def atualizar(self):
         pass
-    # Método que recebe a notificação
-    def notificar_fornecedor(self):
+   
+    def adicionar_produto(self, produto):
+        pass
+    
+    def receber_notificacao(self):
         pass
 
 class Usuario(Observer):
@@ -102,31 +108,24 @@ class Usuario(Observer):
             self.subject.sair(self)
 
 class Fornecedor(Observer):
-     def __init__(self, nome, produto=None, subject=None):
-        #Inicializar atributos
+    def __init__(self, nome, produto=None, subject=None):
         self.nome = nome
-        # Produto em falta que o usuário está interessado
         self.produto = produto
-        # Salvar o estoqur
         self.subject = subject
-        # COndição verificar se usuario se inscreveu
         if self.subject:
-            # Chamar o método do estoque
             self.subject.inscrever(self)
-            
-            
-            def notificar_fornecedor(self):
-                print(f"[Fornecedor] {self.nome} notificado")
-                print(f"\trecebemos o produto {self.produto} ")
-                
-                # Sair da lista de observador
-                self.subject.sair(self) 
     
+    def adicionar_produto(self, produto):
+        return super().adicionar_produto(produto)
+    
+    def receber_notificacao(self):
+        return super().receber_notificacao()
         
 if __name__ == '__main__':
     print('Observer')
     
-    # Criar estoque
+class Estoque(Subject):
+    
     estoque = Estoque()
     
     # A joana deve se inscrever no sujeito estoque para poder receber a notificação
